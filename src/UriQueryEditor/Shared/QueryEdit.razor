@@ -1,0 +1,31 @@
+﻿<div class="input-group input-group-sm mb-3">
+	<input type="text" class="form-control" @bind="Input.Key" @oninput="UpdateKey" />
+	<span class="input-group-text">=</span>
+	<input type="text" class="form-control w-50" @bind="Input.Value" @oninput="UpdateValue" />
+	<button class="btn btn-danger btn-sm" type="button" @onclick="x=>OnDelete.InvokeAsync(Input)">x</button>
+</div>
+
+@code {
+
+	[Parameter]
+	public QuerySegment Input { get; set; } = new();
+	[Parameter]
+	public EventCallback<QuerySegment> OnChanged { get; set; }
+	[Parameter]
+	public EventCallback<QuerySegment> OnDelete { get; set; }
+
+	private async Task UpdateKey(ChangeEventArgs x)
+	{
+		Input.Key = ((string?)x.Value)!;
+		await FireEvent();
+	}
+
+	private async Task UpdateValue(ChangeEventArgs x)
+	{
+		Input.Value = ((string?)x.Value)!;
+		await FireEvent();
+	}
+
+	private async Task FireEvent() => await OnChanged.InvokeAsync(Input);
+
+}

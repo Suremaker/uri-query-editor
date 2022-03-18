@@ -1,0 +1,95 @@
+﻿@page "/"
+@using Microsoft.AspNetCore.WebUtilities
+@using Microsoft.Extensions.Primitives
+
+<h4>Input</h4>
+<EditForm Model="_input" OnValidSubmit="@OnEdit">
+	<DataAnnotationsValidator />
+	<ValidationSummary />
+	<div class="input-group input-group-sm mb-3">
+		<div class="input-group-prepend"><span class="input-group-text">Enter Uri:</span></div>
+		<InputText @bind-Value="_input.Uri" class="form-control" />
+		<button class="btn btn-primary btn-sm" type="submit">Edit</button>
+	</div>
+</EditForm>
+
+@if (_base != null)
+{
+	<h4>Edit</h4>
+	<div>Base: <b>@_base</b></div>
+	<div>Query Parameters:</div>
+	@foreach (var p in _queryParams)
+	{
+		<div>
+			<QueryEdit Input="@p" OnChanged="RebuildUri" OnDelete="OnDelete" />
+		</div>
+	}
+	<div>
+		<button class="btn btn-success btn-sm" type="button" @onclick="AddSegment">+</button>
+	</div>
+}
+@if (_output != null)
+{
+	<h4>Outcome</h4>
+	<code class="text-break">
+		@_output
+	</code>
+}
+
+
+@code {
+	private readonly InputModel _input = new();
+	private string? _base;
+	private string? _output;
+	private List<QuerySegment> _queryParams = new();
+
+	private void OnEdit()
+	{
+		var parts = _input.Uri.Split('?');
+		_base = parts[0];
+		var query = parts.Length > 1 ? parts[1] : string.Empty;
+		_queryParams = QueryHelpers.ParseQuery(query).OrderBy(x => x.Key).SelectMany(ToInputModel).ToList();
+		RebuildUri();
+	}
+
+	private static IEnumerable<QuerySegment> ToInputModel(KeyValuePair<string, StringValues> q) => q.Value.Select(v => new QuerySegment(q.Key, v));
+
+	private void RebuildUri()
+	{
+		if (_base == null)
+		{
+			_output = null;
+			return;
+		}
+		var query = ToQueryString();
+
+		_output = string.IsNullOrWhiteSpace(query)
+			? _base
+			: $"{_base}?{query}";
+	}
+
+	private void OnDelete(QuerySegment s)
+	{
+		_queryParams.Remove(s);
+		RebuildUri();
+	}
+
+	private string ToQueryString()
+	{
+		return string.Join('&', _queryParams.Where(s => !string.IsNullOrWhiteSpace(s.Key))
+			.OrderBy(x => x.Key)
+			.Select(x => x.Encode()));
+
+	}
+
+	private void AddSegment()
+	{
+		_queryParams.Add(new QuerySegment());
+	}
+
+	class InputModel
+	{
+		public string Uri { get; set; } = string.Empty;
+	}
+
+}
