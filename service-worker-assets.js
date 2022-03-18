@@ -205,8 +205,16 @@
       "url": "_framework\/UriQueryEditor.dll"
     },
     {
-      "hash": "sha256-4egZ4RDWzDqWCSJRvIbD+Rzgs+kjwhq6lqV+rPKQDV4=",
+      "hash": "sha256-mzKN7Izt1wPCyYci8bOkzx1IT8E0MeeBgzi2QlYfyQ0=",
       "url": "UriQueryEditor.styles.css"
+    },
+    {
+      "hash": "sha256-47DEQpj8HBSa+\/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=",
+      "url": ".nojekyll"
+    },
+    {
+      "hash": "sha256-cizZx1xIH7q36UtY5JP9MGWhZ\/Edivvbf7jgfrejgl8=",
+      "url": "404.html"
     },
     {
       "hash": "sha256-kfXT+\/7PwnK7UBTMq8\/AX20+soj7u1sV\/U1lCtnmSZI=",
@@ -275,11 +283,7 @@
     {
       "hash": "sha256-5aAO+LWGbu+j+g\/Uaeoe1Cd+mNPmKQ4HUeTgpfIne1E=",
       "url": "manifest.json"
-    },
-    {
-      "hash": "sha256-4Yh4OTT5TEAPNyXEzOG+n5l2HPK294WFItz4SIelj88=",
-      "url": "sample-data\/weather.json"
     }
   ],
-  "version": "A\/02SKoY"
+  "version": "0s1QcaLs"
 };
