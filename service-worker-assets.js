@@ -33,7 +33,7 @@
       "url": "_framework\/icudt.dat"
     },
     {
-      "hash": "sha256-nzHR3j34tZwcnHVa3ekzxIUh5aeQ5KwsoJWHFMolGpY=",
+      "hash": "sha256-Hsmx7xb\/UBaJqI7YDjKaF\/FVvBD085kNMc3NAE41\/gs=",
       "url": "_framework\/blazor.boot.json"
     },
     {
@@ -113,11 +113,11 @@
       "url": "_framework\/System.Buffers.dll"
     },
     {
-      "hash": "sha256-qFe4xS\/1V9D7eWDX9H4GAWcMmv28e1RMHbkLOmUwFpo=",
+      "hash": "sha256-hku9Rd94dUuha7Ws6p6mD5tJ6vfo26efxZXBgWrfKcA=",
       "url": "_framework\/System.Collections.Concurrent.dll"
     },
     {
-      "hash": "sha256-sXEZ8UVlcFSocS0W1d\/shWGbZv+bDSsCmZClSOlIugU=",
+      "hash": "sha256-sBMCndHosd8j7l7JhI611uzUx7P\/Gbx6D4hVbAjg\/yo=",
       "url": "_framework\/System.Collections.dll"
     },
     {
@@ -157,7 +157,7 @@
       "url": "_framework\/System.Linq.Expressions.dll"
     },
     {
-      "hash": "sha256-L982+5fGeUow34mTmvzhvUrI\/wYidSdqPnLymwx3Cp4=",
+      "hash": "sha256-GUpWTrym4OlzeGZWf6NJB5Vrr+fQ0w2Jgk52PkWKKxo=",
       "url": "_framework\/System.Memory.dll"
     },
     {
@@ -173,7 +173,7 @@
       "url": "_framework\/System.ObjectModel.dll"
     },
     {
-      "hash": "sha256-Xjm1nr+wkk7CFBGweCZ4j9npzpC3f1N38vuS\/Gkqpko=",
+      "hash": "sha256-nLEP1Ow\/SzFe4nuEAQlujj7BhD9FXYxyCqwWh6CYTAg=",
       "url": "_framework\/System.Private.CoreLib.dll"
     },
     {
@@ -189,7 +189,7 @@
       "url": "_framework\/System.Runtime.CompilerServices.Unsafe.dll"
     },
     {
-      "hash": "sha256-Fsf4ndxh6ZKHeyhW19z6vfyMm5Ge80M\/ktMzmFGQdpA=",
+      "hash": "sha256-F0U7lYgF8PyH5lcTTBd36FSMiQ1kUHwBsteg5vjQE88=",
       "url": "_framework\/System.Runtime.dll"
     },
     {
@@ -201,7 +201,11 @@
       "url": "_framework\/System.Text.Json.dll"
     },
     {
-      "hash": "sha256-74eo0fjnRM+baoPa89FQdpa5zmXwidsYPJq09cH\/jEk=",
+      "hash": "sha256-SXDlj0fd+fDPKYoDhywAo4zDh6kg2sZtG8r0J4R9\/4w=",
+      "url": "_framework\/System.Text.RegularExpressions.dll"
+    },
+    {
+      "hash": "sha256-0Zpt+\/QsRx\/h81KvVeNBX6Xef3vnVVdfRRCXhzfhIRI=",
       "url": "_framework\/UriQueryEditor.dll"
     },
     {
@@ -285,5 +289,5 @@
       "url": "manifest.json"
     }
   ],
-  "version": "0s1QcaLs"
+  "version": "pEUxVRg5"
 };
