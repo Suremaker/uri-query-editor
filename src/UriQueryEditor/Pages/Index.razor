@@ -7,8 +7,18 @@
 	<DataAnnotationsValidator />
 	<ValidationSummary />
 	<div class="input-group input-group-sm mb-3">
-		<div class="input-group-prepend"><span class="input-group-text">Enter Uri:</span></div>
-		<InputText @bind-Value="_input.Uri" class="form-control" />
+		<span class="input-group-text">Template format:</span>
+		<select class="form-select form-select-sm" @bind="_input.TemplateRegex">
+			<option value="">None</option>
+			@foreach (var t in TemplateParams.Templates)
+			{
+				<option value="@t.Pattern">@t.Name</option>
+			}
+		</select>
+	</div>
+	<div class="input-group input-group-sm mb-3">
+		<span class="input-group-text">Enter Uri:</span>
+		<InputText @bind-Value="_input.Uri" class="form-control form-control-sm" />
 		<button class="btn btn-primary btn-sm" type="submit">Edit</button>
 	</div>
 </EditForm>
@@ -20,12 +30,18 @@
 	<div>Query Parameters:</div>
 	@foreach (var p in _queryParams)
 	{
-		<div>
-			<QueryEdit Input="@p" OnChanged="RebuildUri" OnDelete="OnDelete" />
-		</div>
+		<QueryEdit Input="@p" OnChanged="RebuildUri" OnDelete="OnDeleteQuery" />
 	}
 	<div>
-		<button class="btn btn-success btn-sm" type="button" @onclick="AddSegment">+</button>
+		<button class="btn btn-success btn-sm" type="button" @onclick="AddQuerySegment">+</button>
+	</div>
+	<div>Template Parameters:</div>
+	@foreach (var p in _templateParams)
+	{
+		<QueryEdit Input="@p" OnChanged="RebuildUri" DisableKeyEdit="true" />
+	}
+	<div>
+		<button class="btn btn-success btn-sm" type="button" @onclick="AddTemplateSegment">+</button>
 	</div>
 }
 @if (_output != null)
@@ -41,18 +57,21 @@
 	private readonly InputModel _input = new();
 	private string? _base;
 	private string? _output;
-	private List<QuerySegment> _queryParams = new();
+	private List<Segment> _queryParams = new();
+	private List<Segment> _templateParams = new();
 
 	private void OnEdit()
 	{
-		var parts = _input.Uri.Split('?');
+		var (output, parameters) = TemplateParams.Extract(_input.Uri, _input.TemplateRegex);
+		_templateParams = parameters;
+		var parts = output.Split('?');
 		_base = parts[0];
 		var query = parts.Length > 1 ? parts[1] : string.Empty;
 		_queryParams = QueryHelpers.ParseQuery(query).OrderBy(x => x.Key).SelectMany(ToInputModel).ToList();
 		RebuildUri();
 	}
 
-	private static IEnumerable<QuerySegment> ToInputModel(KeyValuePair<string, StringValues> q) => q.Value.Select(v => new QuerySegment(q.Key, v));
+	private static IEnumerable<Segment> ToInputModel(KeyValuePair<string, StringValues> q) => q.Value.Select(v => new Segment(q.Key, v));
 
 	private void RebuildUri()
 	{
@@ -66,9 +85,10 @@
 		_output = string.IsNullOrWhiteSpace(query)
 			? _base
 			: $"{_base}?{query}";
+		_output = TemplateParams.Apply(_output, _templateParams);
 	}
 
-	private void OnDelete(QuerySegment s)
+	private void OnDeleteQuery(Segment s)
 	{
 		_queryParams.Remove(s);
 		RebuildUri();
@@ -82,14 +102,20 @@
 
 	}
 
-	private void AddSegment()
+	private void AddQuerySegment()
 	{
-		_queryParams.Add(new QuerySegment());
+		_queryParams.Add(new Segment());
+	}
+
+	private void AddTemplateSegment()
+	{
+		_templateParams.Add(new Segment(TemplateParams.GetKeyForIndex(_templateParams.Count)));
 	}
 
 	class InputModel
 	{
 		public string Uri { get; set; } = string.Empty;
+		public string TemplateRegex { get; set; } = string.Empty;
 	}
 
 }

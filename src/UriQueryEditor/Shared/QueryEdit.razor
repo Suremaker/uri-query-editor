@@ -1,18 +1,20 @@
 ﻿<div class="input-group input-group-sm mb-3">
-	<input type="text" class="form-control" @bind="Input.Key" @oninput="UpdateKey" />
+	<input type="text" class="form-control" @bind="Input.Key" @oninput="UpdateKey" disabled="@DisableKeyEdit"/>
 	<span class="input-group-text">=</span>
 	<input type="text" class="form-control w-50" @bind="Input.Value" @oninput="UpdateValue" />
-	<button class="btn btn-danger btn-sm" type="button" @onclick="x=>OnDelete.InvokeAsync(Input)">x</button>
+	<button class="btn btn-danger btn-sm" type="button" @onclick="x=>OnDelete.InvokeAsync(Input)" disabled="@DisableKeyEdit">x</button>
 </div>
 
 @code {
 
 	[Parameter]
-	public QuerySegment Input { get; set; } = new();
+	public Segment Input { get; set; } = new();
 	[Parameter]
-	public EventCallback<QuerySegment> OnChanged { get; set; }
+	public bool DisableKeyEdit { get; set; }
 	[Parameter]
-	public EventCallback<QuerySegment> OnDelete { get; set; }
+	public EventCallback<Segment> OnChanged { get; set; }
+	[Parameter]
+	public EventCallback<Segment> OnDelete { get; set; }
 
 	private async Task UpdateKey(ChangeEventArgs x)
 	{

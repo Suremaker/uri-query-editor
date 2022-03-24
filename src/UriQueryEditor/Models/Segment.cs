@@ -2,12 +2,12 @@
 
 namespace UriQueryEditor.Models;
 
-public class QuerySegment
+public class Segment
 {
 	public string Key { get; set; }
 	public string Value { get; set; }
 
-	public QuerySegment(string key = "", string value = "")
+	public Segment(string key = "", string value = "")
 	{
 		Key = key;
 		Value = value;
